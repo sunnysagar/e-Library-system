@@ -28,15 +28,15 @@ public class AuthorService {
 
 
     // creating author
-    public String createAuthor(long authorId, String name, String biography){
+    public String findOrCreateAuthor(String name, String biography){
+        Author author = authorRepository.findByName(name);
 
-        Author author = new Author();
-
-        author.setAuthorId(authorId);
-        author.setName(name);
-        author.setBiography(biography);
-
-        authorRepository.save(author);
+        if(author == null){
+            author = new Author();
+            author.setName(name);
+            author.setBiography(biography);
+            authorRepository.save(author);
+        }
 
         return "success";
     }
@@ -57,7 +57,7 @@ public class AuthorService {
     }
 
     // updating author
-    public String updateAuthor(long authorId, Author updatedAuthor){
+    public boolean updateAuthor(long authorId, Author updatAuthor){
         // check author is present or not
         Optional<Author> authorPresent = authorRepository.findById(authorId);
 
@@ -66,16 +66,28 @@ public class AuthorService {
             Author existingAuthor = authorPresent.get();
 
             // Now update the existing author
-            existingAuthor.setName(updatedAuthor.getName());
-            existingAuthor.setBiography(updatedAuthor.getBiography());
+            existingAuthor.setName(updatAuthor.getName());
+            existingAuthor.setBiography(updatAuthor.getBiography());
 
             // save the updated one
             authorRepository.save(existingAuthor);
+            return true;
         }
         else
-            return "Not Present";
+            return false;
 
-        return "success";
+    }
+
+    // save the author detail through book controller
+    public Author saveThroughBook(String name){
+        Author author = authorRepository.findByName(name);
+        if(author == null){
+            author = new Author();
+            author.setName(name);
+            return authorRepository.save(author);
+        }
+
+        return author;
     }
 
     // deleting author
@@ -85,9 +97,5 @@ public class AuthorService {
         return "success";
     }
 
-    public String findByName(String name){
-        authorRepository.findByName(name);
-        return "Found";
-    }
 
 }

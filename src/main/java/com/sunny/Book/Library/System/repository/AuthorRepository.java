@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     Optional<Author> findById(long id);
-    Optional<Author> findByName(String name);
+    Author findByName(String name);
 
 }

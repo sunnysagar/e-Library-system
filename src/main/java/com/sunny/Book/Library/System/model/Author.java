@@ -1,16 +1,18 @@
 package com.sunny.Book.Library.System.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "authorInfo")
 public class Author {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long authorId;
+
+    @Column(nullable = false)
     private String name;
+
     private String biography;
 
     public Author() {

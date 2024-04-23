@@ -1,6 +1,10 @@
 package com.sunny.Book.Library.System.controller;
 
 
+import com.sunny.Book.Library.System.expection.BookNotFoundException;
+import com.sunny.Book.Library.System.expection.CustomExceptionHandler;
+import com.sunny.Book.Library.System.expection.InvalidFormatException;
+import com.sunny.Book.Library.System.model.Author;
 import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.service.AuthorService;
 import com.sunny.Book.Library.System.service.BookService;
@@ -15,6 +19,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Validated
@@ -24,18 +29,23 @@ public class BookController {
     private final BookService bookService;
     private final AuthorService authorService;
 
+    public int bookCount;
+
     public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
         this.authorService = authorService;
     }
 
 
-
     // Read specific book by id from DB
     @GetMapping("{title}")
-    public Book getBookDetails(@PathVariable("title") String  title){
+    public ResponseEntity<?> getBookByTitle(@PathVariable("title") String  title){
+        Book book = bookService.getBookByName(title);
+        if(book == null){
+            throw new BookNotFoundException(title + " book not found");
+        }
 
-        return bookService.getBookByName(title);
+        return ResponseEntity.ok(book);
     }
 
     //Read All book from DB
@@ -44,68 +54,57 @@ public class BookController {
         return bookService.getAllBook();
     }
 
+    // Get all rented books
+    @GetMapping("/rented")
+    public ResponseEntity<List<String>> getRentedBook(){
+        List<String> rentedBookNames = bookService.getRentedBookNames();
+        return ResponseEntity.ok(rentedBookNames);
+    }
+
+    //Get All non rented books
+    @GetMapping("/non-rented")
+    public ResponseEntity<List<String>> getNonRentedBookNames() {
+        List<String> nonRentedBookNames = bookService.getNonRentedBookNames();
+        return ResponseEntity.ok(nonRentedBookNames);
+    }
+
+
     // Adding the book into the DB
     @PostMapping
     public ResponseEntity<?> createBook(@Valid @RequestBody Book book){
 
-//        String author = authorService.findByName(book.getAuthorName());
-//        if(author.isBlank()){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-
-        // set the book Id manually
-        long booKId = generateBookId(book);
-        book.setId(booKId);
+        String authorName = book.getAuthorName();
+        // save the author if not exist
+        Author author = authorService.saveThroughBook(authorName);
 
         // create the book
-        bookService.createBook(book);
-
-//        bookService.createBook(book.getId(),book.getTitle(),book.getAuthorName(),book.getIsbn(),book.getPublicationYear());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Book created successfully.");
+        if(bookService.createBook(book)){
+            return ResponseEntity.status(HttpStatus.CREATED).body("Book created successfully.");
+        }
+        throw new InvalidFormatException("Book format is not correct.");
 
     }
 
 
     // updating the book into the DB
-    @PutMapping("{bookId}")
-    public String updateBook(@PathVariable("bookId") long bookId, @RequestBody Book book)
+    @PutMapping("/{bookId}")
+    public ResponseEntity<?> updateBook(@PathVariable("bookId") long bookId, @Valid @RequestBody Book book)
     {
         if(bookService.updateBook(bookId,book)){
-            return "Book " + bookId + " updated successfully";
+            return ResponseEntity.status(HttpStatus.CREATED).body("Book "+ bookId +" updated successfully.");
 
         }
-        else {
-            return "Not found";
-        }
+        throw new BookNotFoundException("Book with ID " + bookId + " not found.");
 
     }
 
     // Deleting book from DB
     @DeleteMapping("{bookId}")
-    public String deleteBook(@PathVariable("bookId") long bookId){
+    public ResponseEntity<String> deleteBook(@PathVariable("bookId") long bookId){
         bookService.deleteBookById(bookId);
-        return "Book deleted successfully";
-    }
-
-    // Exception handler for validation errors
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex){
-        // extract validation errors from the exception
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getAllErrors().forEach((error) ->{
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-
-            errors.put(fieldName, errorMessage);
-        });
-
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity.ok("Book of ID - "+bookId +" deleted successfully");
     }
 
 
-    private long generateBookId(Book book){
-        return book.getId();
-    }
 }
 

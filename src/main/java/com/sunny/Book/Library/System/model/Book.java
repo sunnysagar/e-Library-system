@@ -1,9 +1,9 @@
 package com.sunny.Book.Library.System.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+//import javax.persistence.*;
 
 import javax.validation.constraints.Pattern;
 
@@ -12,26 +12,31 @@ import javax.validation.constraints.Pattern;
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "Title is required") // This field is required
     private String title;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "authorName")
+    @NotBlank(message = "Author Name is required")
     private String authorName;
 
 //    @Pattern(regexp = "^\\d{3}-\\d{10}$", message = "ISBN must be in the format xxx-xxxxxxxxxx")
 
     @Pattern(regexp = "^(?:ISBN(?:-13)?:?\\s*)?(?=[0-9]{13}$|(?=(?:[0-9]+[-\\ ]){3})[-\\ 0-9]{17}$)[0-9]{1,5}[-\\ ]?[0-9]+[-\\ ]?[0-9]+[-\\ ]?[0-9]+[-\\ ]?[0-9]$", message = "ISBN must be in the correct format")
+    @NotBlank(message = "isbn is required in correct format xxx-xxxxxxxxxx")
     private String isbn;
 
-//    private String isbn;
 
-    private String publicationYear;
+//    @NotBlank(message = "Year is required")
+    private long publicationYear;
 
     public Book() {
     }
 
-    public Book(long id, String title, String authorName, String isbn, String publicationYear) {
+
+
+    public Book(long id, String title, String authorName, String isbn, long publicationYear) {
         this.id = id;
         this.title = title;
         this.authorName = authorName;
@@ -71,11 +76,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getPublicationYear() {
+    public Long getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(String publicationYear) {
+    public void setPublicationYear(long publicationYear) {
         this.publicationYear = publicationYear;
     }
 }

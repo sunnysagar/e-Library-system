@@ -1,11 +1,16 @@
 package com.sunny.Book.Library.System.service;
 
 import com.sunny.Book.Library.System.model.Book;
+import com.sunny.Book.Library.System.model.Rental;
 import com.sunny.Book.Library.System.repository.BookRepository;
+import com.sunny.Book.Library.System.repository.RentalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -16,20 +21,8 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-//    public String createBook(long bookId, String title, String authorName, String isbn, String publicationYear) {
-//
-//        Book book = new Book();
-//        book.setId(bookId);
-//        book.setTitle(title);
-//        book.setAuthorName(authorName);
-//        book.setIsbn(isbn);
-//        book.setPublicationYear(publicationYear);
-//
-//        bookRepository.save(book);
-//
-//        return "success";
-//
-//    }
+    @Autowired
+    RentalRepository rentalRepository;
 
     // logic for wrong ISBN pattern
     public boolean isISBNValid(Book book){
@@ -39,13 +32,21 @@ public class BookService {
         return isbn.matches(isbnPattern);
     }
 
-    public String createBook(Book book){
+    // logic for year
+    public boolean isValidYear(Book book){
+        long year = book.getPublicationYear();
+        long currentYear = Year.now().getValue();
 
-        if(!isISBNValid(book)) {
-            throw new IllegalArgumentException("Invalid ISBN format");
+        return year <= currentYear;
+    }
+
+    public boolean createBook(Book book){
+
+        if(!isISBNValid(book) && !isValidYear(book)) {
+           return false;
         }
         bookRepository.save(book);
-        return "success";
+        return true;
     }
 
     public Book getBookByName(String title) {
@@ -53,8 +54,30 @@ public class BookService {
         return bookRepository.findByTitle(title).orElse(null);
 
     }
+
+    public Book getBookById(long bookId) {
+
+        return bookRepository.findById(bookId).orElse(null);
+
+    }
+
     public List<Book> getAllBook(){
         return bookRepository.findAll();
+    }
+
+    // get all rented books
+    public List<String> getRentedBookNames() {
+        List<Book> allBooks = bookRepository.findAll();
+        List<Book> rentedBooks = rentalRepository.findByReturnDateNull().stream().map(Rental::getBook).toList();
+        return rentedBooks.stream().map(Book::getTitle).collect(Collectors.toList());
+    }
+
+    // get all non-rented books
+    public List<String> getNonRentedBookNames() {
+        List<Book> allBooks = bookRepository.findAll();
+        List<Book> rentedBooks = rentalRepository.findByReturnDateNull().stream().map(Rental::getBook).toList();
+        List<Book> nonRentedBooks = allBooks.stream().filter(book -> !rentedBooks.contains(book)).toList();
+        return nonRentedBooks.stream().map(Book::getTitle).collect(Collectors.toList());
     }
 
     public boolean updateBook(long bookId, Book updatedBook){
@@ -83,10 +106,9 @@ public class BookService {
 
     }
 
-    public String deleteBookById(long bookId){
+    public void deleteBookById(long bookId){
         bookRepository.deleteById(bookId);
 
-        return "success";
     }
 
 

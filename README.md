@@ -34,18 +34,31 @@ The **Book Library Management System** is a comprehensive backend application de
   * Go to "File" > "Project Structure" > "Project" in IntelliJ IDEA.
   * Set the Project SDK to JDK 17.
   * Click "Apply" and then "OK" to save the changes.
+    
+**Setup Database**
+* Open the project directory
+* Navigate to the src/main/java/resources/application.properties directory.
+* Double-click on the file to open it in the editor.
+* Change the database name otherwise create the same database in your database tool like Workbench.
+    * My SQL Worknbench download [Link](https://dev.mysql.com/downloads/workbench/)
+* Change the url, username, password as per need.
 
 **Build and Run the Application**
 * Once the project is loaded, IntelliJ IDEA will automatically detect the Maven project structure.
 * Navigate to the main class for e.g. Application.java
    * **Steps:**
-      * *Open the project directory
+      * Open the project directory
       * Navigate to the src/main/java directory.
       * Look for the main class file for e.g Application.java
       * Double-click on the main class file to open it in the editor.
-*Right-click on the main class file and select **Run** to build and run the application.
+* Right-click on the main class file and select **Run** to build and run the application.
 
 **Testing Endpoints**
 * Once the application is running, you can test the RESTful APIs using a tool like Postman.
   * Postman download [Link](https://www.postman.com/downloads/)
+  * *Sample request for testing endpoints:* (http//localhost:port_no/)
+    * **Few Samples:**
+      * Get Book by ID : http//localhost:8009/books/bookId
+      * Create Book by POST Method: http//localhost:8009/books
+      * Rent Book by POST Method: http//localhost:8009/rentals/boodId/renterName
   

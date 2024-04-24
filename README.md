@@ -56,9 +56,21 @@ The **Book Library Management System** is a comprehensive backend application de
 **Testing Endpoints**
 * Once the application is running, you can test the RESTful APIs using a tool like Postman.
   * Postman download [Link](https://www.postman.com/downloads/)
-  * *Sample request for testing endpoints:* (http//localhost:port_no/)
+  * *Sample request for testing endpoints:* (http://localhost:port_no/)
     * **Few Samples:**
-      * Get Book by ID : http//localhost:8009/books/bookId
-      * Create Book by POST Method: http//localhost:8009/books
-      * Rent Book by POST Method: http//localhost:8009/rentals/boodId/renterName
-  
+      * Get Book by ID : http://localhost:8009/books/bookId
+      * Create Book by POST Method: http://localhost:8009/books
+      * Rent Book by POST Method: http://localhost:8009/rentals/boodId/renterName
+**Design Decision and Assumptions**
+* **IDE Choice**
+  * IntelliJ IDEA is chosen due to its compatibility with Java, and ease of use and also offers excellent support for Java development, debugging tools, and many more featues.
+* **Database Selection**
+  * MySQL Workbench is selected as the database management system for its reliability, performance, and also provides a user-friendly interface.
+* **Testing with Postman**
+  * It was utilized for testing RESTful APIs due to its intuitive interface, powerful features, and also provide sending requests, inspecting responses, and debugging of API endpoints.
+* **Assumption while developing the application**
+  * Each book has a unique identifier (ID).
+  * ISBN numbers are unique for each book.
+  * Publication year cannot be greater then current year.
+  * Rental durations follow a specific format or policy.
+  * Users are required to provide valid inputs when interacting with the system.

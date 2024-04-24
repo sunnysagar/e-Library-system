@@ -46,7 +46,7 @@ public class BookController {
             throw new BookNotFoundException("book " + title + " not found");
         }
 
-//        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(book);
     }
 
     //Read All book from DB

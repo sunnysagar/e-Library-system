@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class NonUniqueIsbnException extends RuntimeException {
     public NonUniqueIsbnException(String message) {
-//        super(message);
+        super(message);
     }
 }

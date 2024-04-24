@@ -91,7 +91,7 @@ Example: `GET http://localhost:8009/rentals/rentalId`
 Description: Rent a book to renter in the library
 Example: `POST http://localhost:8009/rentals/rent/bookId/renterName`
 
-## PUT/rentals/rentalId
+### PUT/rentals/rentalId
 Description:  update existing rental to the library.
 Example: `PUT http://localhost:8009/rentals/rentalId`
 

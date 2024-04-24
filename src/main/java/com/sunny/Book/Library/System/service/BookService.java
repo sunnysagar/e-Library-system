@@ -32,7 +32,7 @@ public class BookService {
         String isbn = book.getIsbn();
         String isbnPattern = "^\\d{3}-\\d{10}$";
 
-        return isbn.matches(isbnPattern);
+//        return isbn.matches(isbnPattern);
     }
 
     public boolean isValidPublicationYear(Long publicationYear) {

@@ -61,8 +61,8 @@ public class Rental {
         this.renterName = renterName;
     }
 
-    public LocalDate getRentalDate() {
-        return rentalDate;
+    public CharSequence getRentalDate() {
+        return rentalDate.toString();
     }
 
     public void setRentalDate(LocalDate rentalDate) {

@@ -1,9 +1,6 @@
 package com.sunny.Book.Library.System.service;
 
-import com.sunny.Book.Library.System.expection.BookAlreadyRentedException;
-import com.sunny.Book.Library.System.expection.BookNotFoundException;
-import com.sunny.Book.Library.System.expection.RentalNotFoundException;
-import com.sunny.Book.Library.System.expection.RentedOverdueException;
+import com.sunny.Book.Library.System.expection.*;
 import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.model.Rental;
 import com.sunny.Book.Library.System.repository.RentalRepository;
@@ -12,9 +9,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.zip.DataFormatException;
 
 @Service
 public class RentalService {
@@ -57,11 +56,10 @@ public class RentalService {
         rental.setRentalDate(LocalDate.now());
         rentalRepository.save(rental);
 
-//        return true;
     }
 
     // Update rental information
-    public boolean updateRental(long rentalId, Rental updatedRental){
+    public void updateRental(long rentalId, Rental updatedRental){
         // Find the rental by ID
         Optional<Rental> optionalRental = rentalRepository.findById(rentalId);
         if(optionalRental.isEmpty()){
@@ -76,7 +74,6 @@ public class RentalService {
         }
 
 
-
         // check if the associated book exists
         Book book = rental.getBook();
 
@@ -86,12 +83,21 @@ public class RentalService {
         }
 
         // update rental information
-//        returnBook(book);
-//        rental.setRenterName(updatedRental.getRenterName());
-//        rental.setRentalDate(updatedRental.getRentalDate());
 
-        rentalRepository.save(rental);
-        return true;
+        try{
+            // parse the provided date string
+            LocalDate rentalDate = LocalDate.parse(updatedRental.getRentalDate());
+
+            // If parsing succeeds, the format is valid
+            rental.setRenterName(updatedRental.getRenterName());
+            rental.setRentalDate(rentalDate);
+            rentalRepository.save(rental);
+
+        }catch (DateTimeParseException e){
+            // invalid date format
+            throw new InvalidDateFormatException("Invalid rental date format");
+        }
+
     }
 
     // Returning a book
@@ -126,8 +132,8 @@ public class RentalService {
         rentalRepository.deleteById(rentalId);
     }
 
-    // Method to check for overdue rentals(e.g. run daily)
-    @Scheduled(cron = "0 0 0 * * *") // Run at midnight every day
+    // Method to check for overdue rentals(e.g. run daily) with annotation @Scheduled(cron =...)
+    @Scheduled(cron = "0 0 0 * * *") // automatically it runs at midnight every day
     public String checkForOverdueRentals(){
 
         LocalDate today = LocalDate.now();
@@ -149,7 +155,7 @@ public class RentalService {
     // Check if rental is overdue
     private boolean isRentalOverdue(Rental rental){
         LocalDate today = LocalDate.now();
-        LocalDate rentalDate = rental.getRentalDate();
+        LocalDate rentalDate = LocalDate.parse(rental.getRentalDate());
 
         // check if the rental period exceeds a set time like 14 days
 

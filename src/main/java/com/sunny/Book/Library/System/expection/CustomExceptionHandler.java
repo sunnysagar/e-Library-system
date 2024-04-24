@@ -1,5 +1,6 @@
 package com.sunny.Book.Library.System.expection;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -39,17 +40,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    // exception for invalid format
-    @ExceptionHandler({InvalidFormatException.class, RentedOverdueException.class})
+    // exception for bad request
+    @ExceptionHandler({InvalidFormatException.class, RentedOverdueException.class, InvalidDateFormatException.class})
     public ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatusCode status,
-                                                                  WebRequest request) {
+                                                                  @NotNull HttpHeaders headers,
+                                                                  @NotNull HttpStatusCode status,
+                                                                  @NotNull WebRequest request) {
         // Get validation errors
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());

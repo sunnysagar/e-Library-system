@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.Entity;
 
 @SpringBootApplication
-@EntityScan("com.sunny.Book.Library.System.model")
 public class BookLibrarySystemApplication {
 
 	public static void main(String[] args) {

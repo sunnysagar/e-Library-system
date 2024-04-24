@@ -1,6 +1,7 @@
 package com.sunny.Book.Library.System.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "authorInfo")
@@ -10,7 +11,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long authorId;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Author Name is required")
     private String name;
 
     private String biography;

@@ -6,6 +6,7 @@ import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/author")
+@Validated
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -42,7 +44,7 @@ public class AuthorController {
 
     // create the author in DB
     @PostMapping
-    public String createAuthor(@RequestBody Author author){
+    public String createAuthor(@Valid @RequestBody Author author){
         authorService.findOrCreateAuthor(author.getName(), author.getBiography());
         return "Author has added successfully";
     }

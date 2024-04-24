@@ -1,5 +1,6 @@
 package com.sunny.Book.Library.System.service;
 
+import com.sunny.Book.Library.System.expection.BookNotFoundException;
 import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.model.Rental;
 import com.sunny.Book.Library.System.repository.BookRepository;
@@ -7,7 +8,6 @@ import com.sunny.Book.Library.System.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,32 +32,28 @@ public class BookService {
         return isbn.matches(isbnPattern);
     }
 
-    // logic for year
-    public boolean isValidYear(Book book){
-        long year = book.getPublicationYear();
-        long currentYear = Year.now().getValue();
-
-        return year <= currentYear;
-    }
-
+    // creating new book
     public boolean createBook(Book book){
 
-        if(!isISBNValid(book) && !isValidYear(book)) {
+        if(!isISBNValid(book)) {
            return false;
         }
         bookRepository.save(book);
         return true;
     }
 
-    public Book getBookByName(String title) {
+    // get specific book by name
+    public List<Book> getBookByName(String title) {
 
-        return bookRepository.findByTitle(title).orElse(null);
-
+        return bookRepository.findByTitleIgnoreCaseContaining(title);
     }
 
+    // get specific book by id
     public Book getBookById(long bookId) {
 
-        return bookRepository.findById(bookId).orElse(null);
+        return bookRepository.findById(bookId).
+                orElseThrow(() ->
+                        new BookNotFoundException("Book with ID "+ bookId + " not found."));
 
     }
 
@@ -72,7 +68,7 @@ public class BookService {
         return rentedBooks.stream().map(Book::getTitle).collect(Collectors.toList());
     }
 
-    // get all non-rented books
+    // get all non-rented books or available books
     public List<String> getNonRentedBookNames() {
         List<Book> allBooks = bookRepository.findAll();
         List<Book> rentedBooks = rentalRepository.findByReturnDateNull().stream().map(Rental::getBook).toList();
@@ -101,14 +97,16 @@ public class BookService {
         }
         else
             return false;
-
-//        return "success";
-
     }
 
+    // deleting the book, when it is present in DB
     public void deleteBookById(long bookId){
-        bookRepository.deleteById(bookId);
+        Optional<Book> bookPresent = bookRepository.findById(bookId);
+        if(bookPresent.isEmpty()){
+            throw new BookNotFoundException("Book with ID " +bookId + "not present.");
+        }
 
+        bookRepository.deleteById(bookId);
     }
 
 

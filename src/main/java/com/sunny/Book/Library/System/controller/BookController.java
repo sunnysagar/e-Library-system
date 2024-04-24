@@ -39,8 +39,8 @@ public class BookController {
 
     // Read specific book by id from DB
     @GetMapping("{title}")
-    public ResponseEntity<?> getBookByTitle(@PathVariable("title") String  title){
-        Book book = bookService.getBookByName(title);
+    public ResponseEntity<?> getBookByTitle(@Valid @PathVariable("title") String  title){
+        List<Book> book = bookService.getBookByName(title);
         if(book == null){
             throw new BookNotFoundException(title + " book not found");
         }
@@ -61,8 +61,8 @@ public class BookController {
         return ResponseEntity.ok(rentedBookNames);
     }
 
-    //Get All non rented books
-    @GetMapping("/non-rented")
+    //Get All non-rented books
+    @GetMapping("/available")
     public ResponseEntity<List<String>> getNonRentedBookNames() {
         List<String> nonRentedBookNames = bookService.getNonRentedBookNames();
         return ResponseEntity.ok(nonRentedBookNames);
@@ -81,7 +81,7 @@ public class BookController {
         if(bookService.createBook(book)){
             return ResponseEntity.status(HttpStatus.CREATED).body("Book created successfully.");
         }
-        throw new InvalidFormatException("Book format is not correct.");
+        throw new InvalidFormatException("Error! Once check the each parameter format.");
 
     }
 

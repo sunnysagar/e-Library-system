@@ -63,11 +63,9 @@ public class RentalController {
     @PutMapping("{rentalId}")
     public ResponseEntity<?> updateRental(@PathVariable("rentalId") long rentalId, @Valid @RequestBody Rental updatedRental){
 
-        if(rentalService.updateRental(rentalId, updatedRental)) {
+        rentalService.updateRental(rentalId, updatedRental);
             return ResponseEntity.ok().body("Rental with Id " + rentalId + " updated successfully.");
-        }
 
-        throw new RentedOverdueException("Cannot update overdue rental");
     }
 
     // returning the book

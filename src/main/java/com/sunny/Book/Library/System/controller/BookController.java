@@ -16,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class BookController {
     public ResponseEntity<?> getBookByTitle(@Valid @PathVariable("title") String  title){
         List<Book> book = bookService.getBookByName(title);
         if(book == null){
-            throw new BookNotFoundException(title + " book not found");
+            throw new BookNotFoundException("book " + title + " not found");
         }
 
         return ResponseEntity.ok(book);
@@ -81,8 +82,8 @@ public class BookController {
         if(bookService.createBook(book)){
             return ResponseEntity.status(HttpStatus.CREATED).body("Book created successfully.");
         }
-        throw new InvalidFormatException("Error! Once check the each parameter format.");
-
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Publication Year " + book.getPublicationYear()+
+                " is greater than current year "+ Year.now().getValue());
     }
 
 

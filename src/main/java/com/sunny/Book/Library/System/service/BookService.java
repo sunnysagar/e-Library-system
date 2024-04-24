@@ -1,6 +1,8 @@
 package com.sunny.Book.Library.System.service;
 
 import com.sunny.Book.Library.System.expection.BookNotFoundException;
+import com.sunny.Book.Library.System.expection.InvalidFormatException;
+import com.sunny.Book.Library.System.expection.NonUniqueIsbnException;
 import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.model.Rental;
 import com.sunny.Book.Library.System.repository.BookRepository;
@@ -8,6 +10,7 @@ import com.sunny.Book.Library.System.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,11 +35,25 @@ public class BookService {
         return isbn.matches(isbnPattern);
     }
 
+    public boolean isValidPublicationYear(Long publicationYear) {
+        // Get the current year
+        int currentYear = Year.now().getValue();
+
+        // Validate if the publication year is not greater than the current year
+        return publicationYear != null && publicationYear <= currentYear;
+    }
+
     // creating new book
     public boolean createBook(Book book){
 
         if(!isISBNValid(book)) {
-           return false;
+            throw new InvalidFormatException("Error! Please ensure that each parameter format is correct.");
+        }
+        if((bookRepository.existsByIsbn(book.getIsbn()))){
+            throw new NonUniqueIsbnException("ISBN " + book.getIsbn() + " already exists");
+        }
+        if(!isValidPublicationYear(book.getPublicationYear())){
+            return false;
         }
         bookRepository.save(book);
         return true;
@@ -90,6 +107,9 @@ public class BookService {
             existingBook.setIsbn(updatedBook.getIsbn());
             existingBook.setPublicationYear(updatedBook.getPublicationYear());
 
+            if((bookRepository.existsByIsbn(existingBook.getIsbn()))){
+                throw new NonUniqueIsbnException("ISBN " + existingBook.getIsbn() + " already exists");
+            }
             // save the updated one
             bookRepository.save(existingBook);
 

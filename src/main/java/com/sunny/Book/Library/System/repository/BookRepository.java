@@ -13,4 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findById(long bookId);
     List<Book> findByTitleIgnoreCaseContaining(String title);
     List<Book> findByAuthorNameIgnoreCaseContaining(String authorName);
+    boolean existsByIsbn(String isbn);
 }

@@ -17,9 +17,10 @@ The **Book Library Management System** is a comprehensive backend application de
 ## Setup Instructions
 **Requirements**
 * Ensure you have latest version IntelliJ IDEA installed on your system.
+   * [Download link](https://www.jetbrains.com/idea/download/)
 * Make sure you have JDK 17 installed and configured.
 * Clone the repository containing the project files.
-    *clone command:* git clone <repository_url> (HTTPS_url)
+    * *clone command:* git clone <repository_url> (HTTPS_url)
 
 **Open Project in IntelliJ IDEA:**
 * Launch IntelliJ IDEA.
@@ -33,4 +34,18 @@ The **Book Library Management System** is a comprehensive backend application de
   * Go to "File" > "Project Structure" > "Project" in IntelliJ IDEA.
   * Set the Project SDK to JDK 17.
   * Click "Apply" and then "OK" to save the changes.
+
+**Build and Run the Application**
+* Once the project is loaded, IntelliJ IDEA will automatically detect the Maven project structure.
+* Navigate to the main class for e.g. Application.java
+   * **Steps:**
+      * *Open the project directory
+      * Navigate to the src/main/java directory.
+      * Look for the main class file for e.g Application.java
+      * Double-click on the main class file to open it in the editor.
+*Right-click on the main class file and select **Run** to build and run the application.
+
+**Testing Endpoints**
+* Once the application is running, you can test the RESTful APIs using a tool like Postman.
+  * Postman download [Link](https://www.postman.com/downloads/)
   

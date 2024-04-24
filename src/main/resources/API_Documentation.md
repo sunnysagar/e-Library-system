@@ -69,7 +69,7 @@ Example: `GET http://localhost:8009/author`
 Description: Add a new author to the library.
 Example: `POST http://localhost:8009/author`
 
-## PUT/author/authorId
+### PUT/author/authorId
 Description:  update existing author to the library.
 Example: `PUT http://localhost:8009/author/authorId`
 

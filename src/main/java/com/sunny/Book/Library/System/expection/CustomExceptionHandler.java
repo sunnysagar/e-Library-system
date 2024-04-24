@@ -41,7 +41,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // exception for bad request
-    @ExceptionHandler({InvalidFormatException.class, RentedOverdueException.class, InvalidDateFormatException.class})
+    @ExceptionHandler({InvalidFormatException.class, RentedOverdueException.class, InvalidDateFormatException.class, DuplicateUserException.class})
     public ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }

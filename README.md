@@ -43,7 +43,7 @@ The **Book Library Management System** is a comprehensive backend application de
     * My SQL Worknbench download [Link](https://dev.mysql.com/downloads/workbench/)
 * Change the url, username, password as per need.
 
-**Build and Run the Application**
+## Build and Run the Application
 * Once the project is loaded, IntelliJ IDEA will automatically detect the Maven project structure.
 * Navigate to the main class for e.g. Application.java
    * **Steps:**
@@ -53,7 +53,7 @@ The **Book Library Management System** is a comprehensive backend application de
       * Double-click on the main class file to open it in the editor.
 * Right-click on the main class file and select **Run** to build and run the application.
 
-**Testing Endpoints**
+## Testing Endpoints
 * Once the application is running, you can test the RESTful APIs using a tool like Postman.
   * Postman download [Link](https://www.postman.com/downloads/)
   * *Sample request for testing endpoints:* (http://localhost:port_no/)
@@ -61,7 +61,7 @@ The **Book Library Management System** is a comprehensive backend application de
       * Get Book by ID : http://localhost:8009/books/bookId
       * Create Book by POST Method: http://localhost:8009/books
       * Rent Book by POST Method: http://localhost:8009/rentals/boodId/renterName
-**Design Decision and Assumptions**
+## Design Decision and Assumptions
 * **IDE Choice**
   * IntelliJ IDEA is chosen due to its compatibility with Java, and ease of use and also offers excellent support for Java development, debugging tools, and many more featues.
 * **Database Selection**

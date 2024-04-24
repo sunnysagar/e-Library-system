@@ -9,6 +9,7 @@ import com.sunny.Book.Library.System.service.BookService;
 import com.sunny.Book.Library.System.service.RentalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rentals")
+@Validated
 public class RentalController {
     public final RentalService rentalService;
     public final BookService bookService;
@@ -25,7 +27,6 @@ public class RentalController {
         this.rentalService = rentalService;
         this.bookService = bookService;
     }
-
 
 
     // get specific rental from DB

@@ -78,6 +78,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    // getting all books of particular author by authorName from DB
+    public List<Book> getAllBookByAuthorName(String authorName){
+        return bookRepository.findByAuthorNameIgnoreCaseContaining(authorName);
+    }
+
     // get all rented books
     public List<String> getRentedBookNames() {
         List<Book> allBooks = bookRepository.findAll();

@@ -1,10 +1,7 @@
 package com.sunny.Book.Library.System.service;
 
 import com.sunny.Book.Library.System.model.Author;
-import com.sunny.Book.Library.System.model.Book;
 import com.sunny.Book.Library.System.repository.AuthorRepository;
-import com.sunny.Book.Library.System.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,16 +16,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    @Autowired
-    BookRepository bookRepository;
-
-//    public AuthorService(BookRepository bookRepository) {
-//        this.bookRepository = bookRepository;
-//    }
-
-
     // creating author
-    public String findOrCreateAuthor(String name, String biography){
+    public void findOrCreateAuthor(String name, String biography){
         Author author = authorRepository.findByName(name);
 
         if(author == null){
@@ -38,7 +27,6 @@ public class AuthorService {
             authorRepository.save(author);
         }
 
-        return "success";
     }
 
     // getting author
@@ -48,12 +36,6 @@ public class AuthorService {
 
     public List<Author> getAllAuthor(){
         return authorRepository.findAll();
-    }
-
-    // getting all books of particular author by authorName from DB
-
-    public List<Book> getAllBookByAuthorName(String authorName){
-        return bookRepository.findByAuthorNameIgnoreCaseContaining(authorName);
     }
 
     // updating author
@@ -91,10 +73,9 @@ public class AuthorService {
     }
 
     // deleting author
-    public String deleteAuthor(long id)
+    public void deleteAuthor(long id)
     {
         authorRepository.deleteById(id);
-        return "success";
     }
 
 

@@ -36,12 +36,6 @@ public class AuthorController {
         return authorService.getAllAuthor();
     }
 
-    // read all book by author name from DB
-    @GetMapping("{authorName}/books")
-    public List<Book> getAllBooksByAuthor(@PathVariable("authorName") String authorName){
-        return authorService.getAllBookByAuthorName(authorName);
-    }
-
     // create the author in DB
     @PostMapping
     public String createAuthor(@Valid @RequestBody Author author){

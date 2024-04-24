@@ -61,6 +61,12 @@ public class BookController {
         return bookService.getAllBook();
     }
 
+    // read all book by author name from DB
+    @GetMapping("/author/{authorName}")
+    public List<Book> getAllBooksByAuthor(@PathVariable("authorName") String authorName){
+        return bookService.getAllBookByAuthorName(authorName);
+    }
+
     // Get all rented books
     @GetMapping("/rented")
     public ResponseEntity<List<String>> getRentedBook(){

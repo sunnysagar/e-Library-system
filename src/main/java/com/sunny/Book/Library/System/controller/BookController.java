@@ -39,8 +39,14 @@ public class BookController {
 
 
     // Read specific book by id from DB
-    @GetMapping("{title}")
-    public ResponseEntity<?> getBookByTitle(@Valid @PathVariable("title") String  title){
+    @GetMapping("{bookId}")
+    public ResponseEntity<Book> getBookById(@PathVariable("bookId") long bookId){
+        return ResponseEntity.ok(bookService.getBookById(bookId));
+    }
+
+    // Read specific book by title from DB
+    @GetMapping("/title/{title}")
+    public ResponseEntity<?> getBookByTitle(@PathVariable("title") String  title){
         List<Book> book = bookService.getBookByName(title);
         if(book == null){
             throw new BookNotFoundException("book " + title + " not found");

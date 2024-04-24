@@ -14,4 +14,23 @@ The **Book Library Management System** is a comprehensive backend application de
 * **MySQL:** The relational database management system used for storing book, author, and rental data, ensuring data integrity and reliability.
 * **IntelliJ IDEA:** The integrated development environment (IDE) for Java development, providing tools for coding, debugging, and testing.
 
-## Installation and Execution
+## Setup Instructions
+**Requirements**
+* Ensure you have latest version IntelliJ IDEA installed on your system.
+* Make sure you have JDK 17 installed and configured.
+* Clone the repository containing the project files.
+    *clone command:* git clone <repository_url> (HTTPS_url)
+
+**Open Project in IntelliJ IDEA:**
+* Launch IntelliJ IDEA.
+* Select "Open" from the main menu.
+* Navigate to the location where you cloned the project repository.
+* Select the project folder and click "Open" to load the project into IntelliJ IDEA.
+
+**Configure Project SDK:**
+* *The IDE will automatically configure the project SDK.*
+* *However, if it doesn't, Do it manually*:
+  * Go to "File" > "Project Structure" > "Project" in IntelliJ IDEA.
+  * Set the Project SDK to JDK 17.
+  * Click "Apply" and then "OK" to save the changes.
+  

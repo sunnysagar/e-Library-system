@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+/* .horizontal_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} */
+
+  /* #book-list1 {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  } */
+
+  #book-table{
+    width: 80%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    align-items: center;
+    border:3px solid rgba(0, 26, 14, 0.959);
+
+  }
+
+  #table-head{
+    background: rgb(94, 214, 238);
+    text-align: center;
+    align-items: center;
+  }
+  #head-row{
+    padding: 5px;
+    margin: 8px;
+    border: 4px solid black;
+  }
+
+  #book-list2{
+    border: 5px solid black;
+    margin: 20px;
+    text-align: center;
+  }
+.AddBook{
+    width: 80%;
+    margin: 50px;
+    background: white;
+    margin: 20px;
+}
+h2{
+    text-align: center;
+}
+
+
+#btn{
+    justify-content: center;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#addbook{
+    margin: 15px;
+    padding: 10px;
+    background: rgba(250, 174, 59, 0.793);
+    border: 2px solid black;
+    border-radius: 15px;
+}
+input{
+    padding: 12px;
+    margin: 15px;
+}
+
+
+
+  .book {
+    width: 250px; /* Adjust width of each book item */
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
+}
+  
+  /* .book {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .book:last-child {
+    border-bottom: none;
+  } */
+  

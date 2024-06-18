@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <div class='form-container'>
+       
+        <div class='formm'>
+          <div class='span'>
+            <div class='left'>
+              <h2>Create Account</h2>
+            </div>
+            <div class='right'>
+              <h3 id="adLogin"> <a href='#'>Sign in</a></h3>
+
+              <Script>
+                document.getElementById('adLogin').addEventListener('click', function(){
+                    window.location.href = 'adminLog.html';
+                });
+              </Script>
+
+            </div>
+          
+          </div>
+          <form id="signup-form">
+  
+            <div class='input-field'>
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Your Name" required="true" />
+              
+            </div>
+  
+            <div class='input-field'>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Your Email"  required="true" />
+                
+            </div>
+  
+            <div class='input-field'>
+                <label>Phone</label>
+                <input type="text" name="phone" placeholder="Your Mobile number" required="true" />    
+            </div>
+  
+            <div class='input-field'>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required="true" />    
+            </div>
+  
+            <button type="submit">Sign Up</button>
+            <span class="error" id="error-message"></span>
+              <div class='Log'>
+                <a id="adLoginn" href="#">Already have an account? </a>
+              </div>
+              <div id="toast-container"></div>
+            </form>
+          </div> 
+          
+          <Script>
+            document.getElementById('adLoginn').addEventListener('click', function(){
+                window.location.href = 'adminLog.html';
+            });
+          </Script>
+      </div>
+
+      <script src="../js/adminSignup.js"></script>
+    
+</body>
+</html>

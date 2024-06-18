@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Library</title>
+
+    <!-- <link rel="stylesheet" href="D:\sunny\Pragramming\SpringBoot\bookLibrarySystem\Frontend\e-libraryUI\css\style.css">
+     -->
+     <link rel="stylesheet" href="../css/style.css">
+     <!-- ../css/bookAdd.css -->
+</head>
+<body>
+    
+    <div class='form-container'>
+        <div class='select'>
+          <a href='#' id='admin'>Admin</a>
+          <a href='#' id='stu'>Student</a>
+
+
+          <script>
+            document.getElementById('admin').addEventListener('click', function() {
+                window.location.href = 'adminLog.html';
+            });
+    
+            document.getElementById('stu').addEventListener('click', function() {
+                window.location.href = 'studentLog.html';
+            });
+        </script>
+        </div>
+        <div class='formm'>
+          <div class='span'>
+            <div class='left'>
+              <h2>Sign in</h2>
+            </div>
+            <div class='right'>
+              <h3> <a href='/'>Create Account</a></h3>
+            </div>
+          
+          </div>
+          <form onSubmit={handleSubmit}>
+  
+  
+            <div class='input-field'>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Your Email"/>
+                
+            </div>
+  
+  
+            <div class='input-field'>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password"/>    
+            </div>
+  
+            <button type="submit">Login</button>
+              <div class='Log'>
+                <a href="/">Not have an account? </a>
+              </div>
+            </form>
+          </div>      
+      </div>
+    
+</body>
+</html>

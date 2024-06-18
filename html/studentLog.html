@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class='form-container'>
+       
+        <div class='formm'>
+          <div class='span'>
+            <div class='left'>
+              <h2>Sign in</h2>
+            </div>
+            <div class='right'>
+              <h3 id="stuSignup"> <a href='#'>Create Account</a></h3>
+
+              <script>
+                document.getElementById('stuSignup').addEventListener('click', function(){
+                    window.location.href = 'studentSignup.html';
+                });
+              </script>
+            </div>
+          
+          </div>
+          <form onSubmit={handleSubmit}>
+  
+            <div class='input-field'>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Your Email" required="true" onChange={handleChange} />
+                
+            </div>
+  
+            <div class='input-field'>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required="true" onChange={handleChange} />   
+            </div>
+  
+            <button type="submit">Login</button>
+            <!-- {error && <span class='error'>{error}</span>} 
+              {/* <div class='Log'>
+                  <button onClick={handleSuccess}>Show Success Toast</button>
+                  <button onClick={handleError}>Show Error Toast</button>
+                  <ToastContainer/>
+              </div> */}
+               <ToastContainer/> -->
+            </form>
+           
+          </div>      
+      </div>
+    
+</body>
+</html>
